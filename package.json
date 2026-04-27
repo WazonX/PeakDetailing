@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.14",
+    "tailwindcss": "^4.1.14"
+  },
+  "name": "peakdetailing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

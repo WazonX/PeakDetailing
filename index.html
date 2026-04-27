@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/output.css"/>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body
+    class="
+    bg-zinc-900
+    michroma-regular
+    cursor-default
+    select-none
+    "
+>
+<!-- Header -->
+    <header
+    class="
+    fixed
+    z-20
+    bg-zinc-900
+    border-1
+    w-full
+    border-b-zinc-200
+    py-2
+    flex
+    justify-center 
+    items-center 
+    gap-15
+    max-sm:gap-5
+    "
+    >
+        <a
+        href="#gallery"
+        class="
+        text-zinc-200
+        text-2xl
+        max-sm:text-lg
+        max-sm:m-2
+        lg:text-4xl
+        lg:m-5
+        cursor-pointer
+        "
+        >
+            Galeria
+        </a>
+        <a
+        href="#pricing"
+        class="        
+        text-zinc-200
+        text-2xl
+        lg:text-4xl
+        lg:m-5
+        cursor-pointer
+        max-sm:text-lg
+        max-sm:m-2
+        "
+        >
+            Cennik
+        </a>
+        <a
+        href="#contact"
+        class="        
+        text-zinc-200
+        text-2xl
+        lg:text-4xl
+        lg:m-5
+        cursor-pointer
+        max-sm:text-lg
+        max-sm:m-2
+        "
+        >
+            Kontakt
+        </a>
+    </header>
+    <!-- Starting Window -->
+    <div 
+    class="
+    h-[90vh]
+    relative
+    justify-center
+    items-center
+    flex
+    overflow-hidden
+    max-sm:h-[80vh]
+    ">
+        <img
+        src="./Images/BgImage.png"
+        alt=""
+        aria-hidden="true"
+        class="
+        absolute
+        inset-0
+        w-full
+        h-full
+        object-cover
+        object-center
+        "
+        />
+        <div
+        class="
+        bg-black
+        absolute
+        inset-0
+        w-full
+        h-full
+        opacity-50
+        "
+        ></div> 
+
+        <h2
+        class="
+        text-6xl
+        opacity-100
+        text-sky-300
+        z-10
+        text-center
+        max-sm:text-4xl
+        "
+        >
+            Peak Detailing
+            </h2>
+    </div>
+    <!-- Main Content -->
+    <div
+    class="
+    py-10
+    w-full
+    "
+    >
+        <!-- Gallery -->
+        <section
+        id="gallery"
+        >
+            <h2
+            class="
+            text-4xl
+            text-zinc-200
+            
+            text-center
+            "
+            >
+            Galeria
+            </h2>
+            <div class="relative my-10 lg:w-[75%] lg:mx-auto px-10 overflow-hidden">
+              <div
+              id="galleryGrid"
+              class="
+              grid
+              grid-cols-4
+              h-full
+              gap-x-10
+              gap-y-5
+              lg:[column-gap:20px]
+              relative
+              max-sm:grid-cols-2
+              "
+              >
+              </div>
+              <div
+              id="galleryRevealMask"
+              class="
+              absolute
+              inset-x-0
+              bottom-0
+              h-[40%]
+              bg-gradient-to-t from-zinc-900 from-30% via-zinc-900/90 via-60% to-transparent to-100%
+              z-20
+              flex
+              items-center
+              justify-center
+              "
+              >
+              <button
+              id="loadMoreBtn"
+              class="
+              z-50
+              bg-zinc-900
+              border-zinc-200
+              border-1
+              text-zinc-200
+              mx-auto
+              mt-8
+              w-[60%]
+              lg:w-[45%]
+              h-[6vh]
+              lg:h-[6vh]
+              rounded-md
+              lg:text-xl
+              hover:bg-zinc-800
+              transition-all
+              duration-300
+              cursor-pointer
+              "
+              >
+              Załaduj więcej
+              </button>
+              </div>
+            </div>
+
+            <!-- Image Overlay -->
+        <div 
+        id="imageOverlay" 
+        class="
+        hidden
+        fixed
+        top-0 
+        left-0 
+        w-full 
+        h-full 
+        bg-black/90 
+        z-[1000]
+        ">
+          <button 
+          id="closeOverlay" 
+          class="
+          absolute 
+          top-[10px] 
+          right-[10px] 
+          z-[1003]
+          bg-red-400 
+          border-none 
+          p-4
+          cursor-pointer
+          text-zinc-800
+          text-3xl
+          font-bold
+          hover:text-zinc-100
+          transition-all
+          duration-300
+          max-sm:top-[5px]
+          max-sm:right-[5px]
+          ">
+          X
+        </button>
+          <div
+          class="
+          absolute
+          inset-0
+          flex
+          flex-col
+          items-center
+          justify-center
+          "
+          >
+            <div 
+            id="carouselTrack" 
+            class="
+            flex 
+            justify-center 
+            items-center 
+            gap-[10px] 
+            mx-auto 
+            max-w-[100%] 
+            h-[66vh]
+            lg:h-[80vh]
+            transition-[opacity_220ms_ease,transform_220ms_ease]
+            "></div>
+            <p 
+            id="overlayDescription" 
+            class="
+            text-zinc-200 
+            text-center 
+            mt-[12px] 
+            mx-auto 
+            max-w-[80%]
+            "></p>
+          </div>
+          <button 
+          id="prevImage" 
+          class="absolute 
+          left-[10px] 
+          top-1/2 
+          -translate-y-1/2 
+          bg-white 
+          border-none 
+          p-[10px] 
+          cursor-pointer
+          max-md:hidden
+          ">
+            <img 
+            class="
+            opacity-70
+            w-fit
+            h-fit
+            float-left
+            mr-3
+            "
+            src="https://unpkg.com/lucide-static@latest/icons/arrow-left.svg" />
+          </button>
+          <button 
+          id="nextImage" 
+          class="
+          absolute 
+          right-[10px] 
+          top-1/2 
+          -translate-y-1/2 
+          bg-white 
+          border-none 
+          p-[10px] 
+          cursor-pointer
+          max-md:hidden
+          ">            
+            <img 
+            class="
+            opacity-70
+            w-fit
+            h-fit
+            float-left
+            mr-3
+            "
+            src="https://unpkg.com/lucide-static@latest/icons/arrow-right.svg" />
+          </button>
+        </div>
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              let currentImageIndex = 0;
+              let folderImages = [];
+              let currentFolderInfo = '';
+              let currentFolderName = '';
+
+              const galleryGrid = document.getElementById('galleryGrid');
+              const loadMoreBtn = document.getElementById('loadMoreBtn');
+              const galleryRevealMask = document.getElementById('galleryRevealMask');
+              const imageOverlay = document.getElementById('imageOverlay');
+              const closeOverlay = document.getElementById('closeOverlay');
+              const carouselTrack = document.getElementById('carouselTrack');
+              const overlayDescription = document.getElementById('overlayDescription');
+              const prevImageBtn = document.getElementById('prevImage');
+              const nextImageBtn = document.getElementById('nextImage');
+
+              const folders = [
+                { name: "BMW", info: "Samochód po pakiecie full z czyszczeniem i impregnacją skór" },
+                { name: "Audi_A4", info: "Samochód po pakiecie full z czyszczeniem i impregnacją skór" },
+                { name: "Opel_Insignia", info: "Samochód po pakiecie full z praniem siedzeń" },
+                { name: "Skoda_Octavia_Rs", info: "Samochód po pakiecie full z praniem siedzeń" },
+                { name: "Suzuki_Ignis", info: "Samochód po pakiecie full z praniem siedzeń" },
+                { name: "Kia_Stinger", info: "Samochód po pakiecie rutynowym z czyszczeniniem i impregnacją skór" }
+              ];
+
+              const imagesData = {
+                "BMW": ["./Images/Cars/BMW/image1.jpeg", "./Images/Cars/BMW/image2.jpeg", "./Images/Cars/BMW/image3.jpeg"],
+                "Audi_A4": ["./Images/Cars/Audi_A4/image1.jpeg", "./Images/Cars/Audi_A4/image2.jpeg"],
+                "Opel_Insignia": ["./Images/Cars/Opel_Insignia/image1.jpeg", "./Images/Cars/Opel_Insignia/image2.jpeg"],
+                "Skoda_Octavia_Rs": ["./Images/Cars/Skoda_Octavia_Rs/image1.jpeg", "./Images/Cars/Skoda_Octavia_Rs/image2.jpeg"],
+                "Suzuki_Ignis": ["./Images/Cars/Suzuki_Ignis/image1.jpeg", "./Images/Cars/Suzuki_Ignis/image2.jpeg"],
+                "Kia_Stinger": ["./Images/Cars/Kia_Stinger/image1.jpeg", "./Images/Cars/Kia_Stinger/image2.jpeg"]
+              };
+
+              const tilesPerRow = 4;
+              const initiallyVisibleRows = 2;
+              const rowsPerLoad = 1;
+              let visibleTiles = 0;
+              let loadedFolders = folders;
+              let loadedImagesData = imagesData;
+              let isCarouselAnimating = false;
+              let touchStartX = 0;
+              let touchStartY = 0;
+              const swipeThresholdPx = 40;
+              const swipeMaxVerticalDriftPx = 70;
+
+              const carouselButtonBaseClass = 'bg-transparent border-none p-0 cursor-pointer [transition:transform_250ms_ease,opacity_250ms_ease,filter_250ms_ease]';
+              const carouselImageBaseClass = 'object-contain rounded-[12px] py-10';
+              const carouselCenterImageClass = 'w-3/4 h-1/5 mx-auto max-sm:w-full max-sm:h-full max-sm:mx-0';
+              const carouselNearImageClass = 'w-[min(24vw,280px)] h-[min(36vh,280px)] max-xl:hidden';
+              const carouselFarImageClass = 'w-[min(16vw,190px)] h-[min(28vh,190px)] max-xl:hidden';
+              const carouselCenterButtonClass = 'opacity-100 scale-100 brightness-100';
+              const carouselNearButtonClass = 'opacity-70 scale-[0.92] brightness-[0.8]';
+              const carouselFarButtonClass = 'opacity-[0.38] scale-[0.84] brightness-[0.6]';
+              let bodyScrollY = 0;
+
+              function lockBodyScroll() {
+                bodyScrollY = window.scrollY || window.pageYOffset || 0;
+                document.body.style.position = 'fixed';
+                document.body.style.top = '-' + bodyScrollY + 'px';
+                document.body.style.left = '0';
+                document.body.style.right = '0';
+                document.body.style.width = '100%';
+                document.body.style.overflow = 'hidden';
+              }
+
+              function unlockBodyScroll() {
+                document.body.style.position = '';
+                document.body.style.top = '';
+                document.body.style.left = '';
+                document.body.style.right = '';
+                document.body.style.width = '';
+                document.body.style.overflow = '';
+                window.scrollTo(0, bodyScrollY);
+              }
+
+              function openOverlay(images, startIndex, folder) {
+                folderImages = images;
+                currentImageIndex = startIndex;
+                currentFolderInfo = folder.info;
+                currentFolderName = folder.name.replaceAll('_', ' ');
+                imageOverlay.classList.remove('hidden');
+                lockBodyScroll();
+                renderOverlay();
+              }
+
+              function renderOverlay() {
+                if (!folderImages.length) {
+                  return;
+                }
+
+                overlayDescription.textContent = currentFolderName + ' - ' + currentFolderInfo + ' (' + (currentImageIndex + 1) + '/' + folderImages.length + ')';
+                carouselTrack.innerHTML = '';
+
+                const offsets = [-2, -1, 0, 1, 2];
+                offsets.forEach(function(offset) {
+                  const index = (currentImageIndex + offset + folderImages.length) % folderImages.length;
+                  const imageButton = document.createElement('button');
+                  imageButton.type = 'button';
+                  imageButton.className = carouselButtonBaseClass;
+
+                  const image = document.createElement('img');
+                  image.src = folderImages[index];
+                  image.alt = currentFolderName + ' zdjęcie ' + (index + 1);
+                  image.className = carouselImageBaseClass;
+
+                  if (offset === 0) {
+                    image.className += ' ' + carouselCenterImageClass;
+                    imageButton.className += ' ' + carouselCenterButtonClass;
+                  } else if (Math.abs(offset) === 1) {
+                    image.className += ' ' + carouselNearImageClass;
+                    imageButton.className += ' ' + carouselNearButtonClass;
+                  } else {
+                    image.className += ' ' + carouselFarImageClass;
+                    imageButton.className += ' ' + carouselFarButtonClass;
+                  }
+
+                  imageButton.addEventListener('click', function() {
+                    animateToIndex(index);
+                  });
+
+                  imageButton.appendChild(image);
+                  carouselTrack.appendChild(imageButton);
+                });
+              }
+
+              function getSlideDirection(fromIndex, toIndex, total) {
+                if (fromIndex === toIndex || total < 2) {
+                  return 1;
+                }
+
+                const forwardDistance = (toIndex - fromIndex + total) % total;
+                const backwardDistance = (fromIndex - toIndex + total) % total;
+                return forwardDistance <= backwardDistance ? 1 : -1;
+              }
+
+              function animateCarouselTransition(onSwitchImage, direction) {
+                if (isCarouselAnimating) {
+                  return;
+                }
+
+                isCarouselAnimating = true;
+                carouselTrack.classList.remove('opacity-100', 'translate-x-0');
+                carouselTrack.classList.add(
+                  'opacity-45',
+                  direction > 0 ? '-translate-x-[44px]' : 'translate-x-[44px]'
+                );
+
+                setTimeout(function() {
+                  onSwitchImage();
+                  renderOverlay();
+
+                  carouselTrack.classList.remove('transition-[opacity_220ms_ease,transform_220ms_ease]');
+                  carouselTrack.classList.add('transition-none');
+                  carouselTrack.classList.remove('-translate-x-[44px]', 'translate-x-[44px]');
+                  carouselTrack.classList.add('opacity-45', direction > 0 ? 'translate-x-[44px]' : '-translate-x-[44px]');
+                  carouselTrack.offsetHeight;
+                  carouselTrack.classList.remove('transition-none', '-translate-x-[44px]', 'translate-x-[44px]', 'opacity-45');
+                  carouselTrack.classList.add('transition-[opacity_220ms_ease,transform_220ms_ease]', 'opacity-100', 'translate-x-0');
+
+                  setTimeout(function() {
+                    isCarouselAnimating = false;
+                  }, 220);
+                }, 120);
+              }
+
+              function animateToIndex(targetIndex) {
+                if (!folderImages.length || targetIndex === currentImageIndex) {
+                  return;
+                }
+
+                const direction = getSlideDirection(currentImageIndex, targetIndex, folderImages.length);
+                animateCarouselTransition(function() {
+                  currentImageIndex = targetIndex;
+                }, direction);
+              }
+
+              function navigateOverlay(direction) {
+                if (!folderImages.length) {
+                  return;
+                }
+
+                animateCarouselTransition(function() {
+                  if (direction < 0) {
+                    currentImageIndex = (currentImageIndex - 1 + folderImages.length) % folderImages.length;
+                  } else {
+                    currentImageIndex = (currentImageIndex + 1) % folderImages.length;
+                  }
+                }, direction < 0 ? -1 : 1);
+              }
+
+              function createTile(folder) {
+                const images = loadedImagesData[folder.name] || [];
+                if (!images.length) {
+                  return null;
+                }
+
+                const tile = document.createElement('button');
+                tile.type = 'button';
+                tile.className = 'bg-zinc-800 rounded-md overflow-hidden aspect-square w-full cursor-pointer hover:scale-[1.02] transition-transform duration-300';
+
+                const preview = document.createElement('img');
+                preview.src = images[0];
+                preview.alt = folder.name;
+                preview.className = 'w-full h-full object-cover';
+                tile.appendChild(preview);
+
+                tile.addEventListener('click', function() {
+                  openOverlay(images, 0, folder);
+                });
+
+                return tile;
+              }
+
+              function renderFirstTiles() {
+                galleryGrid.innerHTML = '';
+                visibleTiles = Math.min(tilesPerRow * initiallyVisibleRows, loadedFolders.length);
+
+                for (let i = 0; i < visibleTiles; i += 1) {
+                  const tile = createTile(loadedFolders[i]);
+                  if (tile) {
+                    galleryGrid.appendChild(tile);
+                  }
+                }
+
+                if (loadedFolders.length <= tilesPerRow) {
+                  loadMoreBtn.classList.add('hidden');
+                  galleryRevealMask.classList.add('hidden');
+                } else {
+                  loadMoreBtn.classList.remove('hidden');
+                  galleryRevealMask.classList.remove('hidden');
+                }
+              }
+
+              function showMoreRows() {
+                const nextVisibleTiles = Math.min(visibleTiles + (tilesPerRow * rowsPerLoad), loadedFolders.length);
+
+                for (let i = visibleTiles; i < nextVisibleTiles; i += 1) {
+                  const tile = createTile(loadedFolders[i]);
+                  if (tile) {
+                    galleryGrid.appendChild(tile);
+                  }
+                }
+
+                visibleTiles = nextVisibleTiles;
+                if (visibleTiles >= loadedFolders.length) {
+                  galleryRevealMask.classList.add('hidden');
+                  loadMoreBtn.classList.add('hidden');
+                }
+              }
+
+              async function loadGalleryDataFromJson() {
+                try {
+                  const listResponse = await fetch('./Images/Cars/list.json');
+                  if (!listResponse.ok) {
+                    return;
+                  }
+
+                  const list = await listResponse.json();
+                  if (!Array.isArray(list) || !list.length) {
+                    return;
+                  }
+
+                  const imagesEntries = await Promise.all(
+                    list.map(async function(folder) {
+                      try {
+                        const imagesResponse = await fetch('./Images/Cars/' + folder.name + '/images.json');
+                        if (!imagesResponse.ok) {
+                          return [folder.name, []];
+                        }
+
+                        const fileNames = await imagesResponse.json();
+                        if (!Array.isArray(fileNames)) {
+                          return [folder.name, []];
+                        }
+
+                        const fullPaths = fileNames.map(function(fileName) {
+                          return './Images/Cars/' + folder.name + '/' + fileName;
+                        });
+
+                        return [folder.name, fullPaths];
+                      } catch (_err) {
+                        return [folder.name, []];
+                      }
+                    })
+                  );
+
+                  loadedFolders = list;
+                  loadedImagesData = Object.fromEntries(imagesEntries);
+                } catch (_err) {
+                  // Keep fallback hardcoded data when JSON files are unavailable.
+                }
+              }
+
+              loadMoreBtn.textContent = 'Pokaż więcej';
+              loadMoreBtn.addEventListener('click', showMoreRows);
+              closeOverlay.addEventListener('click', function() {
+                imageOverlay.classList.add('hidden');
+                unlockBodyScroll();
+              });
+
+              prevImageBtn.addEventListener('click', function() {
+                navigateOverlay(-1);
+              });
+
+              nextImageBtn.addEventListener('click', function() {
+                navigateOverlay(1);
+              });
+
+              imageOverlay.addEventListener('touchstart', function(event) {
+                if (imageOverlay.classList.contains('hidden') || !event.touches.length) {
+                  return;
+                }
+
+                touchStartX = event.touches[0].clientX;
+                touchStartY = event.touches[0].clientY;
+              }, { passive: true });
+
+              imageOverlay.addEventListener('touchend', function(event) {
+                if (imageOverlay.classList.contains('hidden') || !event.changedTouches.length) {
+                  return;
+                }
+
+                const touchEndX = event.changedTouches[0].clientX;
+                const touchEndY = event.changedTouches[0].clientY;
+                const deltaX = touchEndX - touchStartX;
+                const deltaY = touchEndY - touchStartY;
+
+                if (Math.abs(deltaX) < swipeThresholdPx || Math.abs(deltaY) > swipeMaxVerticalDriftPx) {
+                  return;
+                }
+
+                if (deltaX < 0) {
+                  navigateOverlay(1);
+                } else {
+                  navigateOverlay(-1);
+                }
+              }, { passive: true });
+
+              document.addEventListener('keydown', function(event) {
+                if (imageOverlay.classList.contains('hidden')) {
+                  return;
+                }
+
+                if (event.key === 'ArrowLeft') {
+                  event.preventDefault();
+                  navigateOverlay(-1);
+                }
+
+                if (event.key === 'ArrowRight') {
+                  event.preventDefault();
+                  navigateOverlay(1);
+                }
+              });
+
+              loadGalleryDataFromJson().finally(function() {
+                renderFirstTiles();
+              });
+            });
+            </script>
+        </section>
+        <!-- Pricing -->
+<section id="pricing" class="grid grid-cols-1">
+  <h2 class="text-4xl text-zinc-200 text-center mt-20">Cennik</h2>
+
+  <!-- Odkurzanie -->
+  <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Odkurzanie</h2>
+  <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Rutyna - od 100 PLN</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Rutynowe odkurzanie samochodu – obejmuje dokładne odkurzenie wszystkich powierzchni, bez prania podłogówki. Idealne do codziennej pielęgnacji auta.
+      </div>
+    </li>
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Premium - od 155 PLN</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Odkurzanie detaliczne z rutynowym praniem podłogówki i neutralizacją zapachów – usługa bardziej kompleksowa, polecana raz na jakiś czas.
+      </div>
+    </li>
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Spotless - od 260 PLN</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Odkurzanie z wyjęciem siedzeń, dokładne pranie podłogówki, neutralizacja zapachów – pełna detalizacja wnętrza samochodu.
+      </div>
+    </li>
+  </ul>
+
+  <!-- Dywaniki -->
+  <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Dywaniki</h2>
+  <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Rutyna - od 15 PLN/sztuka</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Dokładne odkurzanie dywaników – szybka i podstawowa pielęgnacja.
+      </div>
+    </li>
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Premium - od 25 PLN/sztuka</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Dokładne odkurzanie i szybkie pranie dywaników – poprawa świeżości i wyglądu wnętrza.
+      </div>
+    </li>
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Spotless - od 30 PLN/sztuka</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Dokładne odkurzanie i profesjonalne pranie dywaników – maksymalna czystość i pielęgnacja.
+      </div>
+    </li>
+  </ul>
+
+  <!-- Szyby -->
+  <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Szyby</h2>
+  <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Spotless - 25 PLN</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Dokładne mycie szyb od wewnątrz – lepsza widoczność i bezpieczeństwo podczas jazdy.
+      </div>
+    </li>
+  </ul>
+
+  <!-- Fotele Materiałowe -->
+  <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Fotele Materiałowe</h2>
+  <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Premium - od 30 PLN/fotel</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Dokładne odkurzanie z rutynowym praniem foteli – podstawowa pielęgnacja tapicerki materiałowej.
+      </div>
+    </li>
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Spotless - od 45 PLN/fotel</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Dokładne odkurzanie i pranie foteli – głębsze czyszczenie i odświeżenie wnętrza.
+      </div>
+    </li>
+  </ul>
+
+  <!-- Fotele Skórzane -->
+  <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Fotele Skórzane</h2>
+  <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Premium - od 35 PLN/fotel</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Dokładne odkurzanie i szybkie QD skóry – podstawowa pielęgnacja skórzanej tapicerki.
+      </div>
+    </li>
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Spotless - od 45 PLN/fotel</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Dokładne odkurzanie z myciem i zabezpieczeniem skóry – pełna ochrona i pielęgnacja tapicerki.
+      </div>
+    </li>
+  </ul>
+
+  <!-- Powierzchnie Plastikowe -->
+  <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Powierzchnie Plastikowe</h2>
+  <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Rutyna - 30 PLN</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Rutynowe czyszczenie z zabezpieczaniem deski rozdzielczej – podstawowa ochrona i estetyka wnętrza.
+      </div>
+    </li>
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Premium - 40 PLN</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Czyszczenie wszystkich plastików z zabezpieczeniem – pełniejsza pielęgnacja wnętrza.
+      </div>
+    </li>
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Spotless - 60 PLN</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Dokładne czyszczenie plastików z profesjonalnym zabezpieczeniem – maksymalna estetyka i ochrona.
+      </div>
+    </li>
+  </ul>
+
+  <!-- Pranie Podsufitówki -->
+  <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Pranie Podsufitówki</h2>
+  <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Premium - 30 PLN</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Dokładne czyszczenie zabrudzeń na podsufitówce – poprawia wygląd i świeżość wnętrza.
+      </div>
+    </li>
+    <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
+      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>Spotless - 50 PLN</span>
+        <span class="text-sky-300">+</span>
+      </button>
+      <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
+        Dokładne czyszczenie i pranie podsufitówki – pełna detalizacja i odświeżenie wnętrza.
+      </div>
+    </li>
+  </ul>
+
+</section>
+
+        <!-- Contact -->
+         
+        <section
+        id="contact"
+            class="
+            "
+            >
+            <h2
+            class="
+            text-4xl
+            text-zinc-200
+            w-full
+            text-center
+            mt-20
+            "
+            >
+                Kontakt
+            </h2>
+            <div
+            class="
+            grid 
+            grid-cols-2 
+            gap-5
+            mt-20
+            lg:px-10
+            lg:text-xl
+            max-md:grid-cols-1
+            "
+            >
+                <div
+                class="
+                bg-zinc-700
+                aspect-3/2
+                rounded
+                flex
+                p-10
+                items-center
+                flex-col
+                justify-center
+                max-md:mx-5
+                "
+                >
+                    
+                    <a
+                    href="tel:513203843"
+                    class="
+                    flex
+                    text-zinc-200
+                    cursor-pointer
+                    w-full
+                    mb-5
+                    "
+                    >
+                    <img 
+                    class="
+                    invert
+                    opacity-70
+                    w-fit
+                    h-fit
+                    float-left
+                    mr-3
+                    "
+                    src="https://unpkg.com/lucide-static@latest/icons/phone.svg" />
+
+                        513-203-843
+                     </a>
+                    <a
+                    href="mailto:max@dogfred.com"
+                    class="
+                    flex
+                    text-zinc-200
+                    cursor-pointer
+                    w-full
+                    "
+                    >
+                    <img 
+                    class="
+                    invert
+                    opacity-70
+                    w-fit
+                    h-fit
+                    float-left
+                    mr-3
+                    "
+                    src="https://unpkg.com/lucide-static@latest/icons/mail.svg" />
+                        max@dogfred.com
+                     </a>
+                     <div
+                     class="
+                     w-full
+                     flex
+
+                     "
+                     >
+                        <img 
+                        class="
+                        invert
+                        opacity-70
+                        w-[25px]
+                        h-full
+                        float-left
+                        py-auto
+                        mr-3
+                        "
+                        src="https://unpkg.com/lucide-static@latest/icons/map-pin.svg" />
+                        <p
+                        class="
+                        
+                        text-zinc-200
+                        cursor-pointer
+                        w-full
+                        mt-5
+                        "
+                        >
+                       Do 16km od Grójca dojazd <span class="text-emerald-300">Gratis</span>, do 40km 4PLN/km
+                       </p>
+   
+                     </div>
+                </div>
+                <div
+                class="
+                aspect-3/2
+                rounded
+                max-md:px-5
+                "
+                >
+                    <img
+                    src="./Images/MapRadius.png"
+                    class="
+                    aspect-square
+                    w-full
+                    h-full
+                    object-cover
+                    rounded"
+                    />
+
+                </div>
+            </div>
+        </section>
+        <!-- Footer -->
+        <section
+            class="
+            mt-20
+            text-sm
+            bg-zinc-800
+            py-10
+            max-md:text-xs
+            "
+            >
+                <div
+                class="
+                w-3/4
+                mx-auto
+                flex
+                flex-col
+                justify-between
+                items-center
+                max-md:w-full
+                max-sm:px-5 
+                "
+                >
+                    <p
+                    class="
+                    text-zinc-200
+                    "
+                    >
+                        © 2025 Peak Detailing. Wszelkie prawa zastrzeżone.
+                    </p>
+                    <p
+                    class="
+                    text-zinc-200
+                    text-xs
+                    "
+                    >
+                        Stworzone przez: Maksymilian Gembarzewski
+                    </p>
+        </section>
+    </div>
+    <script>
+    document.querySelectorAll('header a').forEach(link=>{
+      link.addEventListener('click', function(e){
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+      });
+    });
+    </script>
+</body>
+</html>
