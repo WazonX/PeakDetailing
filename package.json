@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.14",
-    "tailwindcss": "^4.1.14"
+    "@tailwindcss/cli": "^4.3.0",
+    "tailwindcss": "^4.3.0"
   },
   "name": "peakdetailing",
   "version": "1.0.0",

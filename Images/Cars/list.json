@@ -1,8 +1,8 @@
 [
-  { "name": "BMW", "info":"Samochód po pakiecie full z czyszczeniem i impregnacją skór" },
-  { "name": "Audi_A4", "info":"Samochód po pakiecie full z czyszczeniem i impregnacją skór" },
-  { "name": "Opel_Insignia", "info":"Samochód po pakiecie full z praniem siedzeń" },
-  { "name": "Skoda_Octavia_Rs", "info":"Samochód po pakiecie full z praniem siedzeń" },
-  { "name": "Suzuki_Ignis", "info":"Samochód po pakiecie full z praniem siedzeń" },
-  { "name": "Kia_Stinger", "info": "Samochód po pakiecie rutynowym z czyszczeniniem i impregnacją skór" }
+  { "name": "BMW"},
+  { "name": "Audi_A4"},
+  { "name": "Opel_Insignia"},
+  { "name": "Skoda_Octavia_Rs"},
+  { "name": "Suzuki_Ignis"},
+  { "name": "Kia_Stinger"}
 ]

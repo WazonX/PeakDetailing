@@ -211,6 +211,7 @@
         h-full 
         bg-black/90 
         z-[1000]
+        overflow-hidden
         ">
           <button 
           id="closeOverlay" 
@@ -242,6 +243,9 @@
           flex-col
           items-center
           justify-center
+          overflow-hidden
+          px-2
+          box-border
           "
           >
             <div 
@@ -252,20 +256,22 @@
             items-center 
             gap-[10px] 
             mx-auto 
-            max-w-[100%] 
-            h-[66vh]
-            lg:h-[80vh]
+            w-full
+            max-w-full
+            min-w-0
+            min-h-0
+            overflow-hidden
+            box-border
+            px-1
+            sm:px-2
+            h-[calc(100svh-5.5rem)]
+            max-h-[calc(100dvh-5.5rem)]
+            portrait:h-[calc(100svh-7rem)]
+            portrait:max-h-[calc(100dvh-7rem)]
+            [@media(max-aspect-ratio:1/1)]:h-[calc(100svh-7rem)]
+            [@media(max-aspect-ratio:1/1)]:max-h-[calc(100dvh-7rem)]
             transition-[opacity_220ms_ease,transform_220ms_ease]
             "></div>
-            <p 
-            id="overlayDescription" 
-            class="
-            text-zinc-200 
-            text-center 
-            mt-[12px] 
-            mx-auto 
-            max-w-[80%]
-            "></p>
           </div>
           <button 
           id="prevImage" 
@@ -318,16 +324,12 @@
             document.addEventListener('DOMContentLoaded', function() {
               let currentImageIndex = 0;
               let folderImages = [];
-              let currentFolderInfo = '';
-              let currentFolderName = '';
-
               const galleryGrid = document.getElementById('galleryGrid');
               const loadMoreBtn = document.getElementById('loadMoreBtn');
               const galleryRevealMask = document.getElementById('galleryRevealMask');
               const imageOverlay = document.getElementById('imageOverlay');
               const closeOverlay = document.getElementById('closeOverlay');
               const carouselTrack = document.getElementById('carouselTrack');
-              const overlayDescription = document.getElementById('overlayDescription');
               const prevImageBtn = document.getElementById('prevImage');
               const nextImageBtn = document.getElementById('nextImage');
 
@@ -361,14 +363,14 @@
               const swipeThresholdPx = 40;
               const swipeMaxVerticalDriftPx = 70;
 
-              const carouselButtonBaseClass = 'bg-transparent border-none p-0 cursor-pointer [transition:transform_250ms_ease,opacity_250ms_ease,filter_250ms_ease]';
-              const carouselImageBaseClass = 'object-contain rounded-[12px] py-10';
-              const carouselCenterImageClass = 'w-3/4 h-1/5 mx-auto max-sm:w-full max-sm:h-full max-sm:mx-0';
-              const carouselNearImageClass = 'w-[min(24vw,280px)] h-[min(36vh,280px)] max-xl:hidden';
-              const carouselFarImageClass = 'w-[min(16vw,190px)] h-[min(28vh,190px)] max-xl:hidden';
-              const carouselCenterButtonClass = 'opacity-100 scale-100 brightness-100';
-              const carouselNearButtonClass = 'opacity-70 scale-[0.92] brightness-[0.8]';
-              const carouselFarButtonClass = 'opacity-[0.38] scale-[0.84] brightness-[0.6]';
+              const carouselButtonBaseClass = 'bg-transparent border-none p-0 cursor-pointer min-w-0 [transition:transform_250ms_ease,opacity_250ms_ease,filter_250ms_ease]';
+              const carouselImageBaseClass = 'block object-contain rounded-[12px]';
+              const carouselCenterImageClass = 'h-full max-h-full w-auto max-w-[min(94vw,42rem)] sm:max-w-[min(90vw,42rem)] xl:max-w-[min(56vw,52rem)] portrait:max-w-[min(92vw,100%)] portrait:max-h-[min(100%,calc(100svh-7.5rem),calc(100dvh-7.5rem),calc(92vw*1.333))] [@media(max-aspect-ratio:1/1)]:max-w-[min(92vw,100%)] [@media(max-aspect-ratio:1/1)]:max-h-[min(100%,calc(100svh-7.5rem),calc(100dvh-7.5rem),calc(92vw*1.333))]';
+              const carouselCenterButtonClass = 'flex flex-1 items-center justify-center h-full min-w-0 shrink opacity-100 scale-100 brightness-100 max-w-[min(94vw,42rem)] sm:max-w-[min(90vw,42rem)] xl:max-w-[min(56vw,52rem)] portrait:max-w-[min(92vw,100%)] [@media(max-aspect-ratio:1/1)]:max-w-[min(92vw,100%)]';
+              const carouselNearImageClass = 'w-[min(24vw,280px)] h-[min(36vh,280px)] max-w-[min(24vw,280px)] max-h-[min(36vh,280px)]';
+              const carouselFarImageClass = 'w-[min(16vw,190px)] h-[min(28vh,190px)] max-w-[min(16vw,190px)] max-h-[min(28vh,190px)]';
+              const carouselNearButtonClass = 'hidden shrink-0 opacity-70 scale-[0.92] brightness-[0.8] xl:block';
+              const carouselFarButtonClass = 'hidden shrink-0 opacity-[0.38] scale-[0.84] brightness-[0.6] xl:block';
               let bodyScrollY = 0;
 
               function lockBodyScroll() {
@@ -391,11 +393,9 @@
                 window.scrollTo(0, bodyScrollY);
               }
 
-              function openOverlay(images, startIndex, folder) {
+              function openOverlay(images, startIndex) {
                 folderImages = images;
                 currentImageIndex = startIndex;
-                currentFolderInfo = folder.info;
-                currentFolderName = folder.name.replaceAll('_', ' ');
                 imageOverlay.classList.remove('hidden');
                 lockBodyScroll();
                 renderOverlay();
@@ -406,7 +406,6 @@
                   return;
                 }
 
-                overlayDescription.textContent = currentFolderName + ' - ' + currentFolderInfo + ' (' + (currentImageIndex + 1) + '/' + folderImages.length + ')';
                 carouselTrack.innerHTML = '';
 
                 const offsets = [-2, -1, 0, 1, 2];
@@ -418,7 +417,7 @@
 
                   const image = document.createElement('img');
                   image.src = folderImages[index];
-                  image.alt = currentFolderName + ' zdjęcie ' + (index + 1);
+                  image.alt = 'Zdjęcie galerii ' + (index + 1);
                   image.className = carouselImageBaseClass;
 
                   if (offset === 0) {
@@ -523,7 +522,7 @@
                 tile.appendChild(preview);
 
                 tile.addEventListener('click', function() {
-                  openOverlay(images, 0, folder);
+                  openOverlay(images, 0);
                 });
 
                 return tile;
@@ -682,29 +681,29 @@
 
   <!-- Odkurzanie -->
   <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Odkurzanie</h2>
-  <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
+  <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0 ">
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Rutyna - od 100 PLN</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Rutynowe odkurzanie samochodu – obejmuje dokładne odkurzenie wszystkich powierzchni, bez prania podłogówki. Idealne do codziennej pielęgnacji auta.
       </div>
     </li>
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Premium - od 155 PLN</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Odkurzanie detaliczne z rutynowym praniem podłogówki i neutralizacją zapachów – usługa bardziej kompleksowa, polecana raz na jakiś czas.
       </div>
     </li>
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Spotless - od 260 PLN</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Odkurzanie z wyjęciem siedzeń, dokładne pranie podłogówki, neutralizacja zapachów – pełna detalizacja wnętrza samochodu.
@@ -716,27 +715,27 @@
   <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Dywaniki</h2>
   <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Rutyna - od 15 PLN/sztuka</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Dokładne odkurzanie dywaników – szybka i podstawowa pielęgnacja.
       </div>
     </li>
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Premium - od 25 PLN/sztuka</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Dokładne odkurzanie i szybkie pranie dywaników – poprawa świeżości i wyglądu wnętrza.
       </div>
     </li>
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Spotless - od 30 PLN/sztuka</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Dokładne odkurzanie i profesjonalne pranie dywaników – maksymalna czystość i pielęgnacja.
@@ -748,9 +747,9 @@
   <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Szyby</h2>
   <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Spotless - 25 PLN</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Dokładne mycie szyb od wewnątrz – lepsza widoczność i bezpieczeństwo podczas jazdy.
@@ -762,18 +761,18 @@
   <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Fotele Materiałowe</h2>
   <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Premium - od 30 PLN/fotel</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Dokładne odkurzanie z rutynowym praniem foteli – podstawowa pielęgnacja tapicerki materiałowej.
       </div>
     </li>
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Spotless - od 45 PLN/fotel</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Dokładne odkurzanie i pranie foteli – głębsze czyszczenie i odświeżenie wnętrza.
@@ -785,18 +784,18 @@
   <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Fotele Skórzane</h2>
   <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Premium - od 35 PLN/fotel</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Dokładne odkurzanie i szybkie QD skóry – podstawowa pielęgnacja skórzanej tapicerki.
       </div>
     </li>
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Spotless - od 45 PLN/fotel</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Dokładne odkurzanie z myciem i zabezpieczeniem skóry – pełna ochrona i pielęgnacja tapicerki.
@@ -808,27 +807,27 @@
   <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Powierzchnie Plastikowe</h2>
   <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Rutyna - 30 PLN</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Rutynowe czyszczenie z zabezpieczaniem deski rozdzielczej – podstawowa ochrona i estetyka wnętrza.
       </div>
     </li>
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Premium - 40 PLN</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Czyszczenie wszystkich plastików z zabezpieczeniem – pełniejsza pielęgnacja wnętrza.
       </div>
     </li>
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Spotless - 60 PLN</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Dokładne czyszczenie plastików z profesjonalnym zabezpieczeniem – maksymalna estetyka i ochrona.
@@ -840,18 +839,18 @@
   <h2 class="text-2xl lg:text-3xl text-zinc-200 text-center mt-20">Pranie Podsufitówki</h2>
   <ul class="text-zinc-200 mt-0 text-center text-l leading-20 w-3/4 mx-auto lg:text-2xl max-md:w-full sm:text-xl max-md:mt-0">
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Premium - 30 PLN</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Dokładne czyszczenie zabrudzeń na podsufitówce – poprawia wygląd i świeżość wnętrza.
       </div>
     </li>
     <li class="border-b-2 hover:border-b-sky-300 transition-all duration-300">
-      <button class="w-full flex justify-between items-center py-2" onclick="this.nextElementSibling.classList.toggle('hidden')">
+      <button class="w-full flex justify-between items-center py-2 max-md:mx-5" onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span>Spotless - 50 PLN</span>
-        <span class="text-sky-300">+</span>
+        <span class="text-sky-300 px-10">+</span>
       </button>
       <div class="text-zinc-400 text-left mt-1 hidden max-md:leading-7">
         Dokładne czyszczenie i pranie podsufitówki – pełna detalizacja i odświeżenie wnętrza.
@@ -865,8 +864,6 @@
          
         <section
         id="contact"
-            class="
-            "
             >
             <h2
             class="
@@ -883,7 +880,6 @@
             class="
             grid 
             grid-cols-2 
-            gap-5
             mt-20
             lg:px-10
             lg:text-xl
@@ -897,7 +893,7 @@
                 rounded
                 flex
                 p-10
-                items-center
+                gap-5
                 flex-col
                 justify-center
                 max-md:mx-5
@@ -910,7 +906,8 @@
                     flex
                     text-zinc-200
                     cursor-pointer
-                    w-full
+                    w-fit
+                    md:p-3
                     mb-5
                     "
                     >
@@ -928,12 +925,13 @@
                         513-203-843
                      </a>
                     <a
-                    href="mailto:max@dogfred.com"
+                    href="mailto:kontakt@peakdetailing.pl"
                     class="
                     flex
                     text-zinc-200
                     cursor-pointer
-                    w-full
+                    w-fit
+                    md:p-3
                     "
                     >
                     <img 
@@ -946,7 +944,7 @@
                     mr-3
                     "
                     src="https://unpkg.com/lucide-static@latest/icons/mail.svg" />
-                        max@dogfred.com
+                        kontakt@peakdetailing.pl
                      </a>
                      <div
                      class="
@@ -955,26 +953,27 @@
 
                      "
                      >
+                        
+                        <p
+                        class="
+                        
+                        text-zinc-200
+                        cursor-default
+                        w-full
+                        mt-5
+                        "
+                        >
                         <img 
                         class="
                         invert
                         opacity-70
-                        w-[25px]
-                        h-full
+                        w-fit
+                        h-fit
                         float-left
                         py-auto
                         mr-3
                         "
                         src="https://unpkg.com/lucide-static@latest/icons/map-pin.svg" />
-                        <p
-                        class="
-                        
-                        text-zinc-200
-                        cursor-pointer
-                        w-full
-                        mt-5
-                        "
-                        >
                        Do 16km od Grójca dojazd <span class="text-emerald-300">Gratis</span>, do 40km 4PLN/km
                        </p>
    
@@ -985,12 +984,12 @@
                 aspect-3/2
                 rounded
                 max-md:px-5
+                h-full
                 "
                 >
                     <img
                     src="./Images/MapRadius.png"
                     class="
-                    aspect-square
                     w-full
                     h-full
                     object-cover
